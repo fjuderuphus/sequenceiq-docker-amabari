@@ -40,7 +40,7 @@ get-ambari-server-ip() {
 }
 
 get-consul-ip() {
-  get-host-ip $CONSUL
+  'amb-consul'
 }
 
 get-host-ip() {
@@ -132,7 +132,7 @@ amb-start-first() {
   sleep 5
 
   run-command sudo docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
-          systemd.setenv=NAMESERVER_ADDR=$(get-consul-ip)
+          systemd.setenv=NAME SERVER_ADDR=$(get-consul-ip)
 
   get-ambari-server-ip
 
