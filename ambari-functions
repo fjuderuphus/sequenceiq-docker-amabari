@@ -74,12 +74,12 @@ debug() {
 
 docker-ps() {
   #docker ps|sed "s/ \{3,\}/#/g"|cut -d '#' -f 1,2,7|sed "s/#/\t/g"
-  docker inspect --format="{{.Name}} {{.NetworkSettings.IPAddress}} {{.Config.Image}} {{.Config.Entrypoint}} {{.Config.Cmd}}" $(docker ps -q)
+  sudo docker inspect --format="{{.Name}} {{.NetworkSettings.IPAddress}} {{.Config.Image}} {{.Config.Entrypoint}} {{.Config.Cmd}}" $(docker ps -q)
 }
 
 docker-psa() {
   #docker ps|sed "s/ \{3,\}/#/g"|cut -d '#' -f 1,2,7|sed "s/#/\t/g"
-  docker inspect --format="{{.Name}} {{.NetworkSettings.IPAddress}} {{.Config.Image}} {{.Config.Entrypoint}} {{.Config.Cmd}}" $(docker ps -qa)
+  sudo docker inspect --format="{{.Name}} {{.NetworkSettings.IPAddress}} {{.Config.Image}} {{.Config.Entrypoint}} {{.Config.Cmd}}" $(docker ps -qa)
 }
 
 amb-start-cluster() {
@@ -97,7 +97,7 @@ _amb_run_shell() {
   COMMAND=$1
   : ${COMMAND:? required}
   get-ambari-server-ip
-  EXPECTED_HOST_COUNT=$(docker inspect --format="{{.Config.Image}} {{.Name}}" $(docker ps -q)|grep $AMBARI_AGENT_IMAGE|grep $NODE_PREFIX|wc -l|xargs)
+  EXPECTED_HOST_COUNT=$(sudo docker inspect --format="{{.Config.Image}} {{.Name}}" $(docker ps -q)|grep $AMBARI_AGENT_IMAGE|grep $NODE_PREFIX|wc -l|xargs)
   run-command docker run -it --rm -e EXPECTED_HOST_COUNT=$EXPECTED_HOST_COUNT -e BLUEPRINT=$BLUEPRINT --link ${AMBARI_SERVER_NAME}:ambariserver \
      --entrypoint /bin/sh $AMBARI_SERVER_IMAGE -c $COMMAND
 }
@@ -139,9 +139,7 @@ amb-start-first() {
   run-command sudo docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
           SERVER_ADDR=$(get-consul-ip)
 
-  echo get-ambari-server-ip
-  get-ambari-server-ip
-
+  get-ambari-server-ip  
   _consul-register-service $AMBARI_SERVER_NAME $AMBARI_SERVER_IP
   _consul-register-service ambari-8080 $AMBARI_SERVER_IP
 }
