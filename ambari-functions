@@ -40,7 +40,7 @@ get-ambari-server-ip() {
 }
 
 get-consul-ip() {
-  'amb-consul'
+  get-host-ip $CONSUL
 }
 
 get-host-ip() {
