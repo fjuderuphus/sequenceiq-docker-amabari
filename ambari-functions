@@ -45,7 +45,7 @@ get-consul-ip() {
 
 get-host-ip() {
   HOST=$1
-  docker inspect --format="{{.NetworkSettings.IPAddress}}" ${HOST}
+  sudo docker inspect --format="{{.NetworkSettings.IPAddress}}" ${HOST}
 }
 
 amb-members() {
@@ -131,7 +131,7 @@ amb-start-first() {
   run-command sudo docker run -d $dns_port_command --name $CONSUL -h $CONSUL.service.consul $CONSUL_IMAGE -server -bootstrap
   sleep 5
 
-  run-command docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
+  run-command sudo docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
           systemd.setenv=NAMESERVER_ADDR=$(get-consul-ip)
 
   get-ambari-server-ip
@@ -175,7 +175,7 @@ amb-start-node() {
     MORE_OPTIONS="$@"
   fi
 
-  run-command docker run $MORE_OPTIONS $DOCKER_OPTS --privileged --name ${NODE_PREFIX}$NUMBER -h ${NODE_PREFIX}${NUMBER}.service.consul $AMBARI_AGENT_IMAGE \
+  run-command sudo docker run $MORE_OPTIONS $DOCKER_OPTS --privileged --name ${NODE_PREFIX}$NUMBER -h ${NODE_PREFIX}${NUMBER}.service.consul $AMBARI_AGENT_IMAGE \
               systemd.setenv=NAMESERVER_ADDR=$(get-consul-ip)
 
   _consul-register-service ${NODE_PREFIX}${NUMBER} $(get-host-ip ${NODE_PREFIX}$NUMBER)
