@@ -97,7 +97,7 @@ _amb_run_shell() {
   COMMAND=$1
   : ${COMMAND:? required}
   get-ambari-server-ip
-  EXPECTED_HOST_COUNT=$(sudo docker inspect --format="{{.Config.Image}} {{.Name}}" $(docker ps -q)|grep $AMBARI_AGENT_IMAGE|grep $NODE_PREFIX|wc -l|xargs)
+  EXPECTED_HOST_COUNT=$(sudo docker inspect --format="{{.Config.Image}} {{.Name}}" $(sudo docker ps -q)|grep $AMBARI_AGENT_IMAGE|grep $NODE_PREFIX|wc -l|xargs)
   run-command sudo docker run -it --rm -e EXPECTED_HOST_COUNT=$EXPECTED_HOST_COUNT -e BLUEPRINT=$BLUEPRINT --link ${AMBARI_SERVER_NAME}:ambariserver \
      --entrypoint /bin/sh $AMBARI_SERVER_IMAGE -c $COMMAND
 }
