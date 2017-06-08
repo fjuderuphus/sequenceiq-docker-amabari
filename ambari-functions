@@ -131,8 +131,7 @@ amb-start-first() {
   run-command sudo docker run -d $dns_port_command --name $CONSUL -h $CONSUL.service.consul $CONSUL_IMAGE -server -bootstrap
   sleep 5
   echo 'done consul'
-  echo sudo docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
-          SERVER_ADDR=$(get-consul-ip)
+
   run-command sudo docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
           SERVER_ADDR=$(get-consul-ip)
 
