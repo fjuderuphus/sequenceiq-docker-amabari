@@ -127,7 +127,7 @@ amb-start-first() {
   if [[ "$EXPOSE_DNS" == "true" ]]; then
      dns_port_command="-p 53:$DNS_PORT/udp"
   fi
-  run-command docker run -d $dns_port_command --name $CONSUL -h $CONSUL.service.consul $CONSUL_IMAGE -server -bootstrap
+  run-command sudo docker run -d $dns_port_command --name $CONSUL -h $CONSUL.service.consul $CONSUL_IMAGE -server -bootstrap
   sleep 5
 
   run-command docker run -d $DOCKER_OPTS --privileged --name $AMBARI_SERVER_NAME -h $AMBARI_SERVER_NAME.service.consul $AMBARI_SERVER_IMAGE \
