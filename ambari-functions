@@ -107,6 +107,10 @@ amb-shell() {
 }
 
 amb-deploy-cluster() {
+  sudo docker rm -f amb-consul
+  sudo docker rm -f amb-server
+  sudo docker rm -f amb1
+  sudo docker rm -f amb2
   local act_cluster_size=$1
   : ${act_cluster_size:=$CLUSTER_SIZE}
 
