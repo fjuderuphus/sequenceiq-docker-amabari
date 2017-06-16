@@ -2,7 +2,7 @@
 
 hadoop-deploy-cluster() {
     sudo docker pull kiwenlau/hadoop:1.0
-    git clone https://github.com/kiwenlau/hadoop-cluster-docker
+    git clone https://github.com/fjuderuphus/hadoop-cluster.git
     sudo docker network create --driver=bridge hadoop
 
     cd hadoop-cluster-docker
