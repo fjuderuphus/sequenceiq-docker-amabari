@@ -6,8 +6,8 @@ hadoop-deploy-cluster() {
     sudo docker network create --driver=bridge hadoop
 
     cd hadoop-cluster
-    sudo docker exec -it hadoop-master bash ./start-container.sh $CLUSTER_SIZE
+    sudo docker exec -it hadoop-master ./start-container.sh $CLUSTER_SIZE
 
-    sudo docker exec -it hadoop-master bash ./start-hadoop.sh
+    sudo docker exec -it hadoop-master ./start-hadoop.sh
 }
 
