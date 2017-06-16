@@ -1,0 +1,13 @@
+: ${CLUSTER_SIZE:=3}
+
+hadoop-deploy-cluster() {
+    sudo docker pull kiwenlau/hadoop:1.0
+    git clone https://github.com/kiwenlau/hadoop-cluster-docker
+    sudo docker network create --driver=bridge hadoop
+
+    cd hadoop-cluster-docker
+    sudo ./start-container.sh $CLUSTER_SIZE
+
+    ./start-hadoop.sh
+}
+
